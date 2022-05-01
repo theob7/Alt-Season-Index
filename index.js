@@ -1,4 +1,5 @@
 import axios from "axios";
+import {initClient, writeData} from "./Influx.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -29,6 +30,10 @@ async function main() {
     computeIndex(cmcApiResult, [50, 100, 500]); // Compute alt season index for top 50, top 100 and top 500 tokens rank
 
     altSeasonIndexes.forEach(elem => elem.toString());
+
+    if (process.env.INFLUX_URL !== "") {
+        await saveToInflux(altSeasonIndexes, [50, 100, 500]);
+    }
 }
 
 // Create Index object for all timeframes
@@ -85,13 +90,37 @@ function computeIndex(cmcApiResult, topToCompute) {
                 .length;
 
             let objectIndex = altSeasonIndexes.findIndex(elem => elem.timeFrame === timeFrame); // Find the object matching the timeframe
-            altSeasonIndexes[objectIndex][`top${top}`] = average(betterThanBitcoin, worstThanBitcoin); // Store alt season index
+            altSeasonIndexes[objectIndex][`top${top}`] = average(betterThanBitcoin, worstThanBitcoin); // Compute alt season index
         }
     }
 }
 
 function average(a, b) {
     return ((a / (a + b)) * 100).toFixed(0);
+}
+
+async function saveToInflux(altSeasonIndexes, topToCompute) {
+    try {
+        initClient(process.env.INFLUX_URL, process.env.INFLUX_TOKEN);
+    } catch (e) {
+        console.error(e);
+        throw new Error(`InfluxDB client init error`);
+    }
+
+    let influxWritePromises = [];
+
+    for (let index of altSeasonIndexes) {
+        for (let top of topToCompute) {
+            influxWritePromises.push(writeData(process.env.INFLUX_ORG, process.env.INFLUX_BUCKET, `alt_season_index_${index.timeFrame}`, `${top}`, index[`top${top}`]));
+        }
+    }
+
+    try {
+        await Promise.all(influxWritePromises);
+    } catch (e) {
+        console.error(e);
+        throw new Error(`InfluxDB write error`);
+    }
 }
 
 main();
