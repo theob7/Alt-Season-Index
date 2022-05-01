@@ -7,21 +7,33 @@ Each index depends on the timeframe (7d, 30d and 90d) and tokens rank without st
 
 Based on CoinMarketCap APIs.
 
-## Setup
+# Setup
 - #### [NodeJS](https://nodejs.org/en/)
 - #### [Git (Optional)](https://git-scm.com/downloads)
 
 ## Download project
-Clone the project `git clone https://github.com/theob7/Alt-Season-Index.git`
+Clone the project
+- `git clone https://github.com/theob7/Alt-Season-Index.git`
+
 
 ## Install packages
-run `npm install` in the git clone destination directory
+Move to clone directory
+- `cd Alt-Season-Index/`
+
+Install packages
+- `npm install`
+
 
 ## Configure project environment variables
-1. **Rename the file ".env_template" to ".env"**
-2. **Fill ".env"**
+Rename template .env file
+- `mv .env_template .env`
 
-## Run
+Fill the file
+- `nano .env`
+
+
+# Run
+Run the script one time
 `node index.js`
 
 ## Recommanded usage
@@ -29,6 +41,7 @@ Add a cron job every hour to update Alt Season indexes:
 - `0 * * * * node /YOUR_PATH/Alt-Season-Index/index.js`
 
 - Visualize index and setup alerts with Grafana dashboard (template available in ./Grafana)
+
 
 ## TODO:
 - [X] Send results to InfluxDB
