@@ -15,6 +15,7 @@ Based on CoinMarketCap APIs.
 
 
 ## TODO:
-- [ ] Send results to InfluxDB
+- [X] Send results to InfluxDB
 - [ ] Grafana dashboards
 - [ ] Telegram notification
+
