@@ -1,8 +1,13 @@
+// Required imports to run this script from cron and .env file
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+import dotenv from "dotenv";
+dotenv.config({ path: path.resolve(__dirname, '.env') })
+
 import axios from "axios";
 import {initClient, writeData} from "./Influx.js";
-import dotenv from "dotenv";
-
-dotenv.config();
 
 const TIME_FRAME = ["7d", "30d", "90d"];
 
@@ -24,6 +29,9 @@ const altSeasonIndex = {
 }
 
 async function main() {
+   if (process.env.CMC_PRO_API_KEY === "") {
+        throw new Error('No CoinMarketCap API key found .env file.');
+   }
     objInit();
     let cmcApiResult = await requestCoinMarketCap();
     populateBitcoinData(cmcApiResult);
