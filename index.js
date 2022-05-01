@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 dotenv.config({ path: path.resolve(__dirname, '.env') })
 
 import axios from "axios";
-import {initClient, writeData} from "./Influx.js";
+import {initClient, writeData} from "./Influx/index.js";
 
 const TIME_FRAME = ["7d", "30d", "90d"];
 
@@ -119,7 +119,7 @@ async function saveToInflux(altSeasonIndexes, topToCompute) {
 
     for (let index of altSeasonIndexes) {
         for (let top of topToCompute) {
-            influxWritePromises.push(writeData(process.env.INFLUX_ORG, process.env.INFLUX_BUCKET, `alt_season_index_${index.timeFrame}`, `${top}`, index[`top${top}`]));
+            influxWritePromises.push(writeData(process.env.INFLUX_ORG, process.env.INFLUX_BUCKET, `alt_season_index_${index.timeFrame}`, `top_${top}`, index[`top${top}`]));
         }
     }
 

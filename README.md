@@ -30,5 +30,5 @@ Add a cron job every hour to update Alt Season indexes:
 
 ## TODO:
 - [X] Send results to InfluxDB
-- [ ] Grafana dashboards
+- [X] Grafana dashboards
 - [ ] Telegram notification
