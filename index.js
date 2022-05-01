@@ -37,8 +37,10 @@ async function main() {
     populateBitcoinData(cmcApiResult);
     computeIndex(cmcApiResult, [50, 100, 500]); // Compute alt season index for top 50, top 100 and top 500 tokens rank
 
-    altSeasonIndexes.forEach(elem => elem.toString());
-
+    if (process.env.DEBUG === "1") {
+        altSeasonIndexes.forEach(elem => elem.toString());
+    }
+    
     if (process.env.INFLUX_URL !== "") {
         await saveToInflux(altSeasonIndexes, [50, 100, 500]);
     }
