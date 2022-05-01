@@ -28,6 +28,8 @@ run `npm install` in the git clone destination directory
 Add a cron job every hour to update Alt Season indexes: 
 - `0 * * * * node /YOUR_PATH/Alt-Season-Index/index.js`
 
+- Visualize index and setup alerts with Grafana dashboard (template available in ./Grafana)
+
 ## TODO:
 - [X] Send results to InfluxDB
 - [X] Grafana dashboards
