@@ -12,20 +12,25 @@ Based on CoinMarketCap APIs.
 - #### [Git (Optional)](https://git-scm.com/downloads)
 
 ## Download project
-Clone the project `git clone https://github.com/theob7/Alt-Season-Index.git`. 
+Clone the project `git clone https://github.com/theob7/Alt-Season-Index.git`
 
 ## Install packages
 run `npm install` in the git clone destination directory
 
 ## Configure project environment variables
-2. **Rename the file ".env_template" to ".env"**
-1. **Fill ".env"**
+1. **Rename the file ".env_template" to ".env"**
+2. **Fill ".env"**
 
 ## Run
 `node index.js`
 
+## Recommanded usage
+Add a cron job every hour to update Alt Season indexes: 
+- `0 * * * * node /YOUR_PATH/Alt-Season-Index/index.js`
+
+- Visualize index and setup alerts with Grafana dashboard (template available in ./Grafana)
 
 ## TODO:
 - [X] Send results to InfluxDB
-- [ ] Grafana dashboards
+- [X] Grafana dashboards
 - [ ] Telegram notification
